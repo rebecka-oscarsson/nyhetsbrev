@@ -1,0 +1,114 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --dark: rgb(115, 132, 158);
+    --light: rgb(161, 182, 212);
+    --bright: darkmagenta;
+}
+
+body {
+    font-family: 'Trebuchet MS', 'Verdana', sans-serif;
+    background: repeating-radial-gradient(at 25% 0,
+            var(--dark),
+            var(--bright) 2px,
+            var(--light) 3px,
+            var(--light) 15px)
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    justify-items: stretch;
+    text-align: center;
+}
+
+h2,
+h3 {
+    font-family: 'Courier New', Courier, monospace;
+    padding: 1em;
+}
+
+h2 {
+    font-size: xx-large;
+    color: var(--bright)
+}
+
+h2:first-of-type {
+    grid-area: 1/1/2/2;
+    border-right: var(--bright) solid 2px;
+    font-size: 60px;
+    padding-bottom: 0;
+}
+
+i {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
+
+
+i:hover {
+    animation: jump 0.2s alternate infinite ease-in-out, moveRight 10s infinite alternate linear; 
+}
+
+@keyframes jump {
+    to {
+        transform: translatey(-40px);
+    }
+}
+
+@keyframes moveRight {
+    to {
+        transform: translatex(100vw);
+    }
+}
+
+section,
+h2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(90deg, var(--light), var(--dark) 100%);
+}
+
+h2:last-of-type {
+    grid-area: 1/2/2/3;
+    background: linear-gradient(135deg, transparent, transparent 10px, var(--bright) 10px, var(--bright) 12px, transparent 12px, transparent 20px, var(--bright) 20px, var(--bright) 22px, transparent 22px, transparent 40px, var(--bright) 40px, var(--bright) 42px, transparent 42px),
+        linear-gradient(90deg, var(--light), var(--dark) 100%);
+}
+
+section:first-of-type {
+    grid-area: 2/1/3/2;
+    border-right: var(--bright) solid 2px;
+    clip-path: polygon(0 0, 100% 0%, 100% 87%, 0% 100%);
+}
+
+section:last-of-type {
+    grid-area: 2/2/3/3;
+    clip-path: polygon(0 0, 100% 0%, 100% 100%, 0 87%);
+}
+
+input {
+    display: block;
+    margin: 1em;
+}
+
+#newsletter {display: inline;}
+
+button {
+    padding: 0.5em;
+    border-radius: 5px;
+    background-color: green;
+    color: wheat;
+}
+
+footer {
+    padding-bottom: 2em;
+    grid-area: 3/1/4/3;
+}
