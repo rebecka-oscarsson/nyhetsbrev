@@ -80,12 +80,19 @@ function login(event){
     postData("http://localhost:3000/users/login", formObject, saveUser)
 }
 
+function register(event){
+    event.preventDefault();//onödigt?
+    let formData = new FormData(document.getElementById("registerForm"));
+    const formObject = Object.fromEntries(formData.entries());
+    postData("http://localhost:3000/users", formObject, saveUser)
+}
+
 function saveUser(user) {user = JSON.parse(user); alert(user); activeUser = user; if(user && user!="incorrect"){localStorage.setItem("savedActiveUser", user)};
  printPage(user)};
 
 
 //tre olika innehåll som kan visas i menydelen av sidan
-const menuLogin =//ändra så att det ligger en eventlistener på loginBtn.action="http://localhost:3000/users/login" method="post"
+const menuLogin =//ändra så att det ligger en eventlistener på loginBtn. method="post" annars blir det URL-parametrar
     `<h3>Logga in</h3><label for="username">Användare:</label>
 <form id="loginForm" method="post">
 <input type="text" id="username" name="name" required>
@@ -96,9 +103,9 @@ const menuLogin =//ändra så att det ligger en eventlistener på loginBtn.actio
 <br>
 <em>eller</em><br><a href="javascript:void(0)">registrera ny användare</a>`;
 
-const menuRegister =
+ const menuRegister =
     `<h3>Registrera dig</h3>
-<form action="http://localhost:3000/users" method="post" />
+<form id="registerForm" method="post" />  
 <label for="newUsername">Välj ett användarnamn:</label>
 <input type="text" id="newUsername" name="name" />
 <label for="password">Välj ett lösenord:</label>
@@ -142,14 +149,16 @@ printPage(activeUser)
  lägger till eventlisteners som kör funktionerna login, logout och printRegisterForm*/
 function printPage(activeUser) {
     console.log("activeUser: ", activeUser)
-    if (activeUser=="undefined"||activeUser==undefined||activeUser==null) {
+    if (activeUser == "undefined"||activeUser == undefined||activeUser == null) {
         contents.textContent = "Logga in eller registrera dig till vänster";
         menu.innerHTML = "";
         menu.insertAdjacentHTML("afterbegin", menuLogin);
         const registerLink = document.querySelector("a");
         registerLink.addEventListener("click", () => {
             menu.innerHTML = "";
-            menu.insertAdjacentHTML("afterbegin", menuRegister)
+            menu.insertAdjacentHTML("afterbegin", menuRegister);
+            const registerForm = document.getElementById("registerForm")
+            registerForm.addEventListener("submit", register);
         });
         const loginForm = document.getElementById("loginForm")
         loginForm.addEventListener("submit", login);
