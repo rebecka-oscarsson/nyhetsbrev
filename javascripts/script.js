@@ -29,12 +29,12 @@ function getData(url, callbackFunction) {
 
 function postData(url, dataToSend, callbackFunction) {
     fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataToSend)
-    })
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dataToSend)
+        })
         .then(response => response.json())
         .then(data => {
             if (callbackFunction) {
@@ -73,37 +73,45 @@ const contents = document.getElementsByTagName("section")[1];
 const contentsHeadline = document.getElementsByTagName("h2")[1];
 
 
-function login(event){
-    event.preventDefault();//onödigt?
+function login(event) {
+    event.preventDefault(); //onödigt?
     let formData = new FormData(document.getElementById("loginForm"));
     const formObject = Object.fromEntries(formData.entries());
     postData("http://localhost:3000/users/login", formObject, saveUser)
 }
 
-function register(event){
-    event.preventDefault();//onödigt?
+function register(event) {
+    event.preventDefault(); //onödigt?
     let formData = new FormData(document.getElementById("registerForm"));
     const formObject = Object.fromEntries(formData.entries());
     postData("http://localhost:3000/users", formObject, saveUser)
 }
 
-function saveUser(user) {user = JSON.parse(user); alert(user); activeUser = user; if(user && user!="incorrect"){localStorage.setItem("savedActiveUser", user)};
- printPage(user)};
+function saveUser(user) {
+    user = JSON.parse(user);
+    alert(user);
+    activeUser = user;
+    if (user && user != "incorrect") {
+        localStorage.setItem("savedActiveUser", user)
+    };
+    printPage(user)
+};
 
 
 //tre olika innehåll som kan visas i menydelen av sidan
-const menuLogin =//ändra så att det ligger en eventlistener på loginBtn. method="post" annars blir det URL-parametrar
-    `<h3>Logga in</h3><label for="username">Användare:</label>
+const menuLogin = //ändra så att det ligger en eventlistener på loginBtn. method="post" annars blir det URL-parametrar
+    `<h3>Logga in</h3>
 <form id="loginForm" method="post">
+<label for="username">Användare:</label>
 <input type="text" id="username" name="name" required>
 <label for="password">Lösenord:</label>
 <input type="password" id="password" name="pwd" required>
 <button id="loginBtn" type="submit">logga in</button>
 </form>
 <br>
-<em>eller</em><br><a href="javascript:void(0)">registrera ny användare</a>`;
+<span><em>eller </em><a href="javascript:void(0)">registrera dig</a></span>`;
 
- const menuRegister =
+const menuRegister =
     `<h3>Registrera dig</h3>
 <form id="registerForm" method="post" />  
 <label for="newUsername">Välj ett användarnamn:</label>
@@ -116,9 +124,11 @@ const menuLogin =//ändra så att det ligger en eventlistener på loginBtn. meth
 <input type="checkbox" id="newsletter" name="newsletter" checked="checked" />
 <br>
 <button id="registerBtn" type="submit">registrera</button>
-</form>`;
+</form>
+<br>
+<span><em>eller</em><a href="javascript:printPage(${activeUser});"> logga in</a></span>`;
 
-const menuLogout = "<a href ='http://localhost:3000/users/logout'><button id='logoutBtn'>logga ut</button></a>";
+const menuLogout = "<button id='logoutBtn'>logga ut</button>";
 
 //tre olika innehåll som kan visas i contents-delen av sidan
 
@@ -149,7 +159,7 @@ printPage(activeUser)
  lägger till eventlisteners som kör funktionerna login, logout och printRegisterForm*/
 function printPage(activeUser) {
     console.log("activeUser: ", activeUser)
-    if (activeUser == "undefined"||activeUser == undefined||activeUser == null) {
+    if (activeUser == "undefined" || activeUser == undefined || activeUser == null) {
         contents.textContent = "Logga in eller registrera dig till vänster";
         menu.innerHTML = "";
         menu.insertAdjacentHTML("afterbegin", menuLogin);
@@ -173,7 +183,7 @@ function printPage(activeUser) {
             menu.insertAdjacentHTML("afterbegin", menuRegister)
         });
     } else {
-        activeUser = activeUser.replace(/^"(.*)"$/, '$1');//fullösning för att få bort citat
+        activeUser = activeUser.replace(/^"(.*)"$/, '$1'); //fullösning för att få bort citat
         getData("http://localhost:3000/users/userData/" + activeUser, printLoggedInPage);
     }
 }
@@ -205,7 +215,11 @@ Nuvarande inställning: <span id="setting">${currentSetting}</span>
     checkbox.addEventListener("change", () => {
         changeNewsletter(checkbox.checked)
     })
-    document.getElementById("logoutBtn").addEventListener("click", ()=>{activeUser=null; localStorage.removeItem("savedActiveUser")})
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+        activeUser = null;
+        localStorage.removeItem("savedActiveUser");
+        printPage(activeUser)
+    })
 }
 
 function changeNewsletter(newSetting) {
@@ -214,40 +228,16 @@ function changeNewsletter(newSetting) {
         "id": savedActiveUser,
         "newsletter": newSetting
     }
-
     postData("http://localhost:3000/users/changeNewsLetter", prenumeration, printNewsletterSetting)
-
-    // fetch("http://localhost:3000/users/changeNewsLetter", {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify(prenumeration)
-    //     })
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         const setting = document.getElementById("setting");
-    //         if (data==true) {
-    //             setting.textContent = "Prenumererar!";
-    //         }
-    //         else if (data =="error") {
-    //             setting.textContent = "Användaren hittades inte";
-    //         }
-    //         else {
-    //             setting.textContent = "Prenumererar inte";
-    //         }
-    //     });
 }
 
-function printNewsletterSetting(data){//den här funktionen måste gå att ta bort
+function printNewsletterSetting(data) { //den här funktionen måste gå att ta bort
     const setting = document.getElementById("setting");
-    if (data==true) {
+    if (data == true) {
         setting.textContent = "Prenumererar!";
-    }
-    else if (data =="error") {
+    } else if (data == "error") {
         setting.textContent = "Användaren hittades inte";
-    }
-    else {
+    } else {
         setting.textContent = "Prenumererar inte";
     }
 }

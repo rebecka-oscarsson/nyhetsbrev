@@ -50,8 +50,6 @@ i {
     -webkit-text-stroke-color: black;
 }
 
-
-
 i:hover {
     animation: jump 0.2s alternate infinite ease-in-out, moveRight 10s infinite alternate linear; 
 }
