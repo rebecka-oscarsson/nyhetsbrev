@@ -1,4 +1,4 @@
-const url = "https://nyhetsbrev-kiwi.herokuapp.com/"
+const url = "https://nyhetsbrev-kiwi.herokuapp.com"
 const urlLocal = "http://localhost:3000";
 
 //hämtar eventuell inloggad användare från localStorage
