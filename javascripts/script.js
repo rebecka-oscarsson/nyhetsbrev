@@ -1,7 +1,5 @@
-// const queryString = window.location.search;
-// const urlParams = new URLSearchParams(queryString);
-// let activeUser = urlParams.get("id");
-//är det ok att skicka använar id:t här? tror det
+const url = "https://nyhetsbrev-kiwi.herokuapp.com/"
+const urlLocal = "http://localhost:3000";
 
 //hämtar eventuell inloggad användare från localStorage
 let activeUser;
@@ -47,9 +45,9 @@ function postData(url, dataToSend, callbackFunction) {
 // let users = getData("./savedUsers", logData);
 // let activeUser = getData("./activeUser", logData);
 
-function logData(data) {
-    console.log("svar från login", JSON.parse(data))
-}
+// function logData(data) {
+//     console.log("svar från login", JSON.parse(data))
+// }
 
 //hämtar eventuella sparade användare samt inloggad användare från localStorage
 // let activeUser;
@@ -77,14 +75,14 @@ function login(event) {
     event.preventDefault(); //onödigt?
     let formData = new FormData(document.getElementById("loginForm"));
     const formObject = Object.fromEntries(formData.entries());
-    postData("http://localhost:3000/users/login", formObject, saveUser)
+    postData(url + "/users/login", formObject, saveUser)
 }
 
 function register(event) {
     event.preventDefault(); //onödigt?
     let formData = new FormData(document.getElementById("registerForm"));
     const formObject = Object.fromEntries(formData.entries());
-    postData("http://localhost:3000/users", formObject, saveUser)
+    postData(url + "/users", formObject, saveUser)
 }
 
 function saveUser(user) {
@@ -184,7 +182,7 @@ function printPage(activeUser) {
         });
     } else {
         activeUser = activeUser.replace(/^"(.*)"$/, '$1'); //fullösning för att få bort citat
-        getData("http://localhost:3000/users/userData/" + activeUser, printLoggedInPage);
+        getData(url + "/users/userData/" + activeUser, printLoggedInPage);
     }
 }
 
