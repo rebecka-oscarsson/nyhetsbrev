@@ -4,16 +4,11 @@ const urlLocal = "http://localhost:3000";
 //hämtar eventuell inloggad användare från localStorage
 let activeUser;
 let savedActiveUser = localStorage.getItem("savedActiveUser");
-//problem: denna hämtas och skriver över
-
 
 //kollar om det finns en inloggad användare lagrad, i så fall använd den
 if (savedActiveUser) {
     activeUser = savedActiveUser
 };
-
-// localStorage.setItem("savedActiveUser", activeUser);
-//skicka ett id på inloggad anv och spara i localstorage. sedan använd för att hämta användarnamn och nyhetsbrev
 
 function getData(url, callbackFunction) {
     fetch(url)
@@ -43,27 +38,10 @@ function postData(url, dataToSend, callbackFunction) {
 
 
 // let users = getData("./savedUsers", logData);
-// let activeUser = getData("./activeUser", logData);
 
 // function logData(data) {
 //     console.log("svar från login", JSON.parse(data))
 // }
-
-//hämtar eventuella sparade användare samt inloggad användare från localStorage
-// let activeUser;
-// let savedActiveUser = localStorage.getItem("savedActiveUser");
-// let savedUsers = JSON.parse(localStorage.getItem("savedUsers"));
-
-//kollar om det finns en inloggad användare lagrad, i så fall använd den
-// if (savedActiveUser) {
-//     activeUser = savedActiveUser
-// };
-
-//kollar om det finns en array av sparade användare, i så fall använd den
-// if (savedUsers) {
-//     users = savedUsers
-// };
-
 
 //lite html-element jag tänker lägga in grejor i
 const menu = document.getElementsByTagName("section")[0];
@@ -87,7 +65,6 @@ function register(event) {
 
 function saveUser(user) {
     user = JSON.parse(user);
-    alert(user);
     activeUser = user;
     if (user && user != "incorrect") {
         localStorage.setItem("savedActiveUser", user)
@@ -95,9 +72,8 @@ function saveUser(user) {
     printPage(user)
 };
 
-
 //tre olika innehåll som kan visas i menydelen av sidan
-const menuLogin = //ändra så att det ligger en eventlistener på loginBtn. method="post" annars blir det URL-parametrar
+const menuLogin =
     `<h3>Logga in</h3>
 <form id="loginForm" method="post">
 <label for="username">Användare:</label>
@@ -129,8 +105,6 @@ const menuRegister =
 const menuLogout = "<button id='logoutBtn'>logga ut</button>";
 
 //tre olika innehåll som kan visas i contents-delen av sidan
-
-
 function contentsLoggedIn(user) {
     let welcomeTemplate = `<h3>Välkommen!</h3>
 <p>
@@ -149,8 +123,7 @@ const contentsError = `<h3>Error!</h3>
 Felaktigt användarnamn eller lösenord
 </p>`;
 
-//kör funktionen för att visa innehåll första gången sidan laddas. jag tror den ska bytas ut så den hämtar från localstorage
-// getData("http://localhost:3000/users/activeUser", printPage)
+//kör funktionen för att visa innehåll första gången sidan laddas.
 printPage(activeUser)
 
 /* skriver ut olika innehåll i menu och contents-delarna beroende på om det finns en användare inloggad eller ej,
@@ -226,7 +199,7 @@ function changeNewsletter(newSetting) {
         "id": savedActiveUser,
         "newsletter": newSetting
     }
-    postData("http://localhost:3000/users/changeNewsLetter", prenumeration, printNewsletterSetting)
+    postData(url + "/users/changeNewsLetter", prenumeration, printNewsletterSetting)
 }
 
 function printNewsletterSetting(data) { //den här funktionen måste gå att ta bort

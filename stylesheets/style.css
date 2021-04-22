@@ -75,10 +75,11 @@ h2 {
     background: linear-gradient(90deg, var(--light), var(--dark) 100%);
 }
 
+h2:first-of-type {background: linear-gradient(45deg, transparent, transparent 85%, var(--bright) 85%, var(--bright) 85.5%, transparent 85.5%, transparent 90%, var(--bright) 90%, var(--bright) 90.5%, transparent 90.5%, transparent 92%, var(--bright) 92%, var(--bright) 92.5%, transparent 92.5%, transparent 98%, var(--bright) 98%, var(--bright) 98.5%, transparent 98.5%), linear-gradient(90deg, var(--light), var(--dark) 100%);}
+
 h2:last-of-type {
     grid-area: 1/2/2/3;
-    background: linear-gradient(135deg, transparent, transparent 10px, var(--bright) 10px, var(--bright) 12px, transparent 12px, transparent 20px, var(--bright) 20px, var(--bright) 22px, transparent 22px, transparent 40px, var(--bright) 40px, var(--bright) 42px, transparent 42px),
-        linear-gradient(90deg, var(--light), var(--dark) 100%);
+    background:linear-gradient(90deg, var(--light), var(--dark) 100%);
 }
 
 section:first-of-type {
