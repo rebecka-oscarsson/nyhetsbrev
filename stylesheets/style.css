@@ -3,7 +3,7 @@
     padding: 0;
 }
 
-.admin {margin:auto;}
+.admin {margin:auto; align-self:center;}
 
 :root {
     --dark: rgb(115, 132, 158);
