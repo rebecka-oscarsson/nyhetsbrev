@@ -129,7 +129,6 @@ printPage(activeUser)
 /* skriver ut olika innehåll i menu och contents-delarna beroende på om det finns en användare inloggad eller ej,
  lägger till eventlisteners som kör funktionerna login, logout och register*/
 function printPage(activeUser) {
-    console.log("activeUser: ", activeUser)
     if (activeUser == "undefined" || activeUser == undefined || activeUser == null) {
         contents.textContent = "Logga in eller registrera dig till vänster";
         menu.innerHTML = "";
