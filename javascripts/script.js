@@ -1,6 +1,6 @@
 //om projektet ska köras lokalt, byt namn på konstanterna (url är den som används)
-const url = "https://nyhetsbrev-kiwi.herokuapp.com"
-const urlLocal = "http://localhost:3000";
+const url = "https://nyhetsbrev-kiwi.herokuapp.com";
+// const url = "http://localhost:3000";
 
 //hämtar eventuell inloggad användare från localStorage
 let savedActiveUser = localStorage.getItem("savedActiveUser");
@@ -21,6 +21,9 @@ function getData(url, callbackFunction) {
                 callbackFunction(data)
             }
         })
+        .catch(function(err) {
+            console.log('Något gick fel', err);
+        });
 }
 
 //generell funktion som skickar data och kör en callbackfunktion med svaret som parameter
@@ -38,6 +41,9 @@ function postData(url, dataToSend, callbackFunction) {
                 callbackFunction(data)
             }
         })
+        .catch(function(err) {
+            console.log('Något gick fel', err);
+        });
 }
 
 //lite html-element jag ska lägga text i
