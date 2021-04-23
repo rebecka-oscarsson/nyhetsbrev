@@ -155,7 +155,7 @@ function printPage(activeUser) {
         });
     } else {
         activeUser = activeUser.replace(/^"(.*)"$/, '$1'); //fullösning för att få bort citat
-        getData(url + "/users/userData/" + activeUser, printLoggedInPage);
+        getData(url + "/users/userData/" + activeUser, printLoggedInPage);//ibland körs denna innan posten är klar?
     }
 }
 
