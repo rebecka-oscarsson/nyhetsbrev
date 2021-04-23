@@ -3,7 +3,9 @@
     padding: 0;
 }
 
-.admin {margin:auto; align-self:center;}
+.admin, table {margin:auto; text-align: center;}
+button.admin{margin-left:40vw}
+
 
 :root {
     --dark: rgb(115, 132, 158);
@@ -11,7 +13,7 @@
     --bright: darkmagenta;
 }
 
-table, button {margin:auto}
+table {margin:auto}
 
 body {background:linear-gradient(90deg, var(--light), var(--dark) 100%);}
 
