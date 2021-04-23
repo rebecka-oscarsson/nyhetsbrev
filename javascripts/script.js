@@ -158,7 +158,7 @@ function printPage(activeUser) {
 }
 
 //skriver ut sidinnehållet för inloggad användare
-//inparametern är ett objekt {name: "ettnamn", newsletter: "on"/undefined}
+//inparametern är ett objekt {name: "ettnamn", newsletter: true/false}
 function printLoggedInPage(user) {
     let currentSetting;
     if (user.newsletter) {
@@ -208,9 +208,6 @@ function printNewsletterSetting(newsletter) {
     const setting = document.getElementById("setting");
     if (newsletter == true) {
         setting.textContent = "Prenumererar!";
-    } else if (newsletter == "error") {
-        setting.textContent = "Användaren hittades inte";
-        //händer bara om användaren raderats ur databasen men finns kvar i localStorage
     } else {
         setting.textContent = "Prenumererar inte";
     }
