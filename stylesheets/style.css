@@ -9,7 +9,9 @@
     --bright: darkmagenta;
 }
 
-body {
+body {background:linear-gradient(90deg, var(--light), var(--dark) 100%);}
+
+body.front {
     font-family: 'Trebuchet MS', 'Verdana', sans-serif;
     background: repeating-radial-gradient(at 25% 0,
             var(--dark),
