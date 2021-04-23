@@ -1,15 +1,18 @@
+//om projektet ska köras lokalt, byt namn på konstanterna (url är den som används)
 const url = "https://nyhetsbrev-kiwi.herokuapp.com"
 const urlLocal = "http://localhost:3000";
 
 //hämtar eventuell inloggad användare från localStorage
-let activeUser;
 let savedActiveUser = localStorage.getItem("savedActiveUser");
 
-//kollar om det finns en inloggad användare lagrad, i så fall använd den
+//om inloggad användare finns så används den
+let activeUser;
+
 if (savedActiveUser) {
     activeUser = savedActiveUser
 };
 
+//generell funktion som hämtar data och kör en callbackfunktion med datan som parameter
 function getData(url, callbackFunction) {
     fetch(url)
         .then(response => response.json())
@@ -20,6 +23,7 @@ function getData(url, callbackFunction) {
         })
 }
 
+//generell funktion som skickar data och kör en callbackfunktion med svaret som parameter
 function postData(url, dataToSend, callbackFunction) {
     fetch(url, {
             method: "POST",
@@ -36,33 +40,29 @@ function postData(url, dataToSend, callbackFunction) {
         })
 }
 
-
-// let users = getData("./savedUsers", logData);
-
-// function logData(data) {
-//     console.log("svar från login", JSON.parse(data))
-// }
-
-//lite html-element jag tänker lägga in grejor i
+//lite html-element jag ska lägga text i
 const menu = document.getElementsByTagName("section")[0];
 const contents = document.getElementsByTagName("section")[1];
 const contentsHeadline = document.getElementsByTagName("h2")[1];
 
-
+//skickar login-formuläret som ett objekt
 function login(event) {
-    event.preventDefault(); //onödigt?
+    event.preventDefault();
     let formData = new FormData(document.getElementById("loginForm"));
     const formObject = Object.fromEntries(formData.entries());
     postData(url + "/users/login", formObject, saveUser)
 }
 
+//skickar registrerings-formuläret som ett objekt
 function register(event) {
-    event.preventDefault(); //onödigt?
+    event.preventDefault();
     let formData = new FormData(document.getElementById("registerForm"));
     const formObject = Object.fromEntries(formData.entries());
     postData(url + "/users", formObject, saveUser)
 }
 
+//sparar aktiv användare (svaret från login eller registrering) i localStorage och global variabel
+//samt kör printPage
 function saveUser(user) {
     user = JSON.parse(user);
     activeUser = user;
@@ -127,7 +127,7 @@ Felaktigt användarnamn eller lösenord
 printPage(activeUser)
 
 /* skriver ut olika innehåll i menu och contents-delarna beroende på om det finns en användare inloggad eller ej,
- lägger till eventlisteners som kör funktionerna login, logout och printRegisterForm*/
+ lägger till eventlisteners som kör funktionerna login, logout och register*/
 function printPage(activeUser) {
     console.log("activeUser: ", activeUser)
     if (activeUser == "undefined" || activeUser == undefined || activeUser == null) {
@@ -154,11 +154,12 @@ function printPage(activeUser) {
             menu.insertAdjacentHTML("afterbegin", menuRegister)
         });
     } else {
-        activeUser = activeUser.replace(/^"(.*)"$/, '$1'); //fullösning för att få bort citat
-        getData(url + "/users/userData/" + activeUser, printLoggedInPage);//ibland körs denna innan posten är klar?
+        getData(url + "/users/userData/" + activeUser, printLoggedInPage);
     }
 }
 
+//skriver ut sidinnehållet för inloggad användare
+//inparametern är ett objekt {name: "ettnamn", newsletter: "on"/undefined}
 function printLoggedInPage(user) {
     let currentSetting;
     if (user.newsletter) {
@@ -193,6 +194,7 @@ Nuvarande inställning: <span id="setting">${currentSetting}</span>
     })
 }
 
+//ändrar status för nyhetsbrev i databasen
 function changeNewsletter(newSetting) {
     let savedActiveUser = localStorage.getItem("savedActiveUser");
     let prenumeration = {
@@ -202,12 +204,14 @@ function changeNewsletter(newSetting) {
     postData(url + "/users/changeNewsLetter", prenumeration, printNewsletterSetting)
 }
 
-function printNewsletterSetting(data) { //den här funktionen måste gå att ta bort
+//ändrar texten när inloggad användare klickar i kryssrutan för nyhetsbrev
+function printNewsletterSetting(newsletter) { 
     const setting = document.getElementById("setting");
-    if (data == true) {
+    if (newsletter == true) {
         setting.textContent = "Prenumererar!";
-    } else if (data == "error") {
+    } else if (newsletter == "error") {
         setting.textContent = "Användaren hittades inte";
+        //händer bara om användaren raderats ur databasen men finns kvar i localStorage
     } else {
         setting.textContent = "Prenumererar inte";
     }
