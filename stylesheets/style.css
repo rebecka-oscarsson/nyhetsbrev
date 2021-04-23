@@ -3,11 +3,15 @@
     padding: 0;
 }
 
+.admin {margin:auto;}
+
 :root {
     --dark: rgb(115, 132, 158);
     --light: rgb(161, 182, 212);
     --bright: darkmagenta;
 }
+
+table, button {margin:auto}
 
 body {background:linear-gradient(90deg, var(--light), var(--dark) 100%);}
 
