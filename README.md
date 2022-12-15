@@ -1,4 +1,5 @@
-## Ett skolprojekt för att träna på Node.js och mongoDB
+## En websida med login och registrering av användare
+Med Node, express, MongoDB, crypto.js
 
 ### hur du startar projektet lokalt:
 1) ladda ner projektmappen och öppna html-filen med live server plugin t ex i visual studio code
