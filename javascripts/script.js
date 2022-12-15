@@ -136,7 +136,7 @@ printPage(activeUser)
  lägger till eventlisteners som kör funktionerna login, logout och register*/
 function printPage(activeUser) {
     if (activeUser == "undefined" || activeUser == undefined || activeUser == null) {
-        contents.textContent = "Logga in eller registrera dig till vänster. Testanvändare: musse, lösenord: pigg";
+        contents.insertAdjacentHTML("afterbegin", `En skoluppgift där jag övar på kryptering och NoSQL.<br> Logga in eller registrera dig till vänster. Testanvändare: musse, lösenord: pigg`);
         menu.innerHTML = "";
         menu.insertAdjacentHTML("afterbegin", menuLogin);
         const registerLink = document.querySelector("a");
