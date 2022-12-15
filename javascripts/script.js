@@ -1,5 +1,5 @@
 //om projektet ska köras lokalt, byt namn på konstanterna (url är den som används)
-const url = "https://nyhetsbrev-kiwi.herokuapp.com";
+const url = "https://nyhetsbrev.onrender.com";
 // const url = "http://localhost:3000";
 
 //hämtar eventuell inloggad användare från localStorage
